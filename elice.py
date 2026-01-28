@@ -54,7 +54,6 @@ class Refine(dspy.Signature):
 
 
 class Program(dspy.Module):
-
     def __init__(self, n_layers: int = 5):
         super().__init__()
         self.n_layers = n_layers
@@ -96,7 +95,9 @@ def metric(objective, prompt, trace=None):
 # Define models
 lm = dspy.LM("openai/gpt-3.5-turbo", max_tokens=512, temperature=0.0, cache=True)
 # agent = dspy.LM("openai/gpt-4-turbo", max_tokens=512, temperature=0.0)
-agent = dspy.LM("openai/gpt-4-0125-preview", max_tokens=512, temperature=0.0, cache=True)
+agent = dspy.LM(
+    "openai/gpt-4-0125-preview", max_tokens=512, temperature=0.0, cache=True
+)
 
 # Define model tasks
 generate = dspy.Predict("prompt: str -> response: str")
@@ -104,7 +105,6 @@ verdict = dspy.ChainOfThought(Assess)
 
 
 if __name__ == "__main__":
-
     load_dotenv()
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
